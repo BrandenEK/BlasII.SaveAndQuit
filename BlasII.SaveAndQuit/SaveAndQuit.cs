@@ -16,59 +16,32 @@ namespace BlasII.SaveAndQuit
             LogError($"{ModInfo.MOD_NAME} is initialized");
         }
 
-        protected override void OnSceneLoaded(string sceneName)
-        {
-        }
-
         protected override void OnUpdate()
         {
             if (Input.GetKeyDown(KeyCode.P) && false)
             {
-                //var widget = Object.FindObjectOfType<OptionsWidget>();
-                //if (widget == null)
-                //    return;
-
-                //foreach (var text in Object.FindObjectsOfType<TMP_Text>())
-                //{
-                //    LogWarning(text.text);
-                //    if (text.text.ToLower().Contains("main menu"))
-                //        Log(text.transform.parent.parent.parent.transform.DisplayHierarchy(5, true));
-
-                //}
-
                 foreach (var menuButton in Object.FindObjectsOfType<UITextSelectable>(true))
                 {
                     if (menuButton.name != "Exit To Main Menu")
                         continue;
-                    menuButton.transform.position += Vector3.down * 100;
 
-                    LogWarning("found main menu button");
+                    LogWarning("Adding S&Q button to menu");
+
                     var saveButton = Object.Instantiate(menuButton, menuButton.transform.parent);
                     saveButton.name = "Save and Quit";
-                    saveButton.transform.position += Vector3.down * 150;
                     saveButton.transform.SetSiblingIndex(1);
                     foreach (var text in saveButton.GetComponentsInChildren<TMP_Text>())
                         text.text = "Save And Quit To Menu";
 
-                    //LogError(saveButton.transform.DisplayHierarchy(4, true));
-
                     var buttonGroup = saveButton.transform.parent.GetComponent<UINavigableListGroup>();
-
-                    //for (int i = 0; i < buttonGroup.transform.childCount; i++)
-                    //{
-                    //    Log(buttonGroup.transform.GetChild(i).position.ToString());
-                    //}
-
-                    var saveComonent = saveButton.GetComponent<UINavigableControl>();
-                    //saveComonent.defaultHandler = new UINavigableControl.DefaultCommandHandler();
-                    //saveComonent.defaultHandler.handler.callback.
+                    var saveNavigation = saveButton.GetComponent<UINavigableControl>();
 
                     UINavigableGroup.UINavigableControlList list = buttonGroup.children;
-                    //list.Insert(1, saveComonent);
-                    list.Insert(0, saveComonent);
+                    list.Insert(0, saveNavigation);
+
                     try
                     {
-                        saveComonent.SetCommandHandlers(null);
+                        saveNavigation.SetCommandHandlers(null);
                     }
                     catch (System.Exception)
                     {
