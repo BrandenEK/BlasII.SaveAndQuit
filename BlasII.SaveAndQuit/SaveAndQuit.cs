@@ -4,6 +4,7 @@ using Il2CppTGK.Game.Components.UI;
 using Il2CppTGK.UI;
 using Il2CppTMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BlasII.SaveAndQuit
 {
@@ -11,46 +12,12 @@ namespace BlasII.SaveAndQuit
     {
         public SaveAndQuit() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }
 
-        protected override void OnInitialize()
-        {
-            LogError($"{ModInfo.MOD_NAME} is initialized");
-        }
+        private UINavigableControl _saveButton;
+        private bool _focused;
 
         protected override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.P) && false)
-            {
-                foreach (var menuButton in Object.FindObjectsOfType<UITextSelectable>(true))
-                {
-                    if (menuButton.name != "Exit To Main Menu")
-                        continue;
-
-                    LogWarning("Adding S&Q button to menu");
-
-                    var saveButton = Object.Instantiate(menuButton, menuButton.transform.parent);
-                    saveButton.name = "Save and Quit";
-                    saveButton.transform.SetSiblingIndex(1);
-                    foreach (var text in saveButton.GetComponentsInChildren<TMP_Text>())
-                        text.text = "Save And Quit To Menu";
-
-                    var buttonGroup = saveButton.transform.parent.GetComponent<UINavigableListGroup>();
-                    var saveNavigation = saveButton.GetComponent<UINavigableControl>();
-
-                    UINavigableGroup.UINavigableControlList list = buttonGroup.children;
-                    list.Insert(0, saveNavigation);
-
-                    try
-                    {
-                        saveNavigation.SetCommandHandlers(null);
-                    }
-                    catch (System.Exception)
-                    {
-                        Log("Removing input handlers from save button");
-                    }
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.F5) && LoadStatus.GameSceneLoaded)
+            if (CoreCache.Input.GetButtonDown("UI Confirm") && _focused && _saveButton != null && _saveButton.gameObject.activeInHierarchy)
             {
                 SaveAndReturnToMenu();
             }
@@ -62,5 +29,54 @@ namespace BlasII.SaveAndQuit
             CoreCache.SaveData.HideSavePopup();
             CoreCache.LoadSequenceManager.ReturnToMainMenu();
         }
+
+        public void OnTabChange()
+        {
+            if (_saveButton != null)
+                return;
+
+            // Need to create the save button
+            foreach (var menuButton in Object.FindObjectsOfType<UITextSelectable>())
+            {
+                if (menuButton.name == "Exit To Main Menu")
+                {
+                    CreateSaveButton(menuButton);
+                    return;
+                }
+            }
+        }
+
+        private void CreateSaveButton(UITextSelectable exitButton)
+        {
+            Log("Adding S&Q button to menu");
+
+            // Create object and change text
+            var saveButton = Object.Instantiate(exitButton, exitButton.transform.parent);
+            saveButton.name = "Save and Quit";
+            saveButton.transform.SetSiblingIndex(1);
+            foreach (var text in saveButton.GetComponentsInChildren<TMP_Text>())
+                text.text = "Save And Quit To Menu";
+
+            _saveButton = saveButton.GetComponent<UINavigableControl>();
+
+            // Add button to selectable list
+            var buttonGroup = saveButton.transform.parent.GetComponent<UINavigableListGroup>();
+            buttonGroup.children.Insert(2, _saveButton);
+
+            // Remove old and add new event handlers
+            try
+            {
+                _saveButton.SetCommandHandlers(null);
+            }
+            catch (System.Exception)
+            {
+
+            }
+            _saveButton.OnFocus.AddListener((UnityAction)FocusButton);
+            _saveButton.OnFocusLost.AddListener((UnityAction)UnfocusButton);
+        }
+
+        private void FocusButton() => _focused = true;
+        private void UnfocusButton() => _focused = false;
     }
 }
