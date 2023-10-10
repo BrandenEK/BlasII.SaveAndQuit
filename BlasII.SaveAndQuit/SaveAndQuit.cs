@@ -50,17 +50,18 @@ namespace BlasII.SaveAndQuit
         {
             Log("Adding S&Q button to menu");
 
-            // Create object and change text
-            var saveButton = Object.Instantiate(exitButton, exitButton.transform.parent);
-            saveButton.name = "Save and Quit";
-            saveButton.transform.SetSiblingIndex(1);
-            foreach (var text in saveButton.GetComponentsInChildren<TMP_Text>())
-                text.text = "Save And Quit To Menu";
+            // Create object
+            _saveButton = Object.Instantiate(exitButton, exitButton.transform.parent).GetComponent<UINavigableControl>();
+            _saveButton.name = "Save and Quit";
+            _saveButton.transform.SetSiblingIndex(1);
 
-            _saveButton = saveButton.GetComponent<UINavigableControl>();
+            // Set text
+            UIPixelTextWithShadow text = _saveButton.GetComponentInChildren<UIPixelTextWithShadow>();
+            text.SetText("Save and Quit to Menu");
+            text.SetColor(Color.white);
 
             // Add button to selectable list
-            var buttonGroup = saveButton.transform.parent.GetComponent<UINavigableListGroup>();
+            var buttonGroup = _saveButton.transform.parent.GetComponent<UINavigableListGroup>();
             buttonGroup.children.Insert(2, _saveButton);
 
             // Remove old and add new event handlers
