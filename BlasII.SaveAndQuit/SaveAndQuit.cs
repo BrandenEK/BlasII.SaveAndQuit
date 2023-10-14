@@ -2,7 +2,6 @@
 using Il2CppTGK.Game;
 using Il2CppTGK.Game.Components.UI;
 using Il2CppTGK.UI;
-using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
