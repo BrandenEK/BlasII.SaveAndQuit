@@ -1,8 +1,8 @@
 ﻿using BlasII.ModdingAPI;
+using BlasII.ModdingAPI.Audio;
 using Il2CppTGK.Game;
 using Il2CppTGK.Game.Components.UI;
 using Il2CppTGK.UI;
-using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,11 +23,17 @@ namespace BlasII.SaveAndQuit
             }
         }
 
+        protected override void OnSceneLoaded(string _)
+        {
+            _focused = false;
+        }
+
         private void SaveAndReturnToMenu()
         {
             CoreCache.SaveData.SaveGame();
             CoreCache.SaveData.HideSavePopup();
             CoreCache.LoadSequenceManager.ReturnToMainMenu();
+            AudioHandler.PlayEffectUI(UISFX.OpenMenu);
         }
 
         public void OnTabChange()
