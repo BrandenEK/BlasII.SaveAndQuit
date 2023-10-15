@@ -23,6 +23,11 @@ namespace BlasII.SaveAndQuit
             }
         }
 
+        protected override void OnSceneLoaded(string _)
+        {
+            _focused = false;
+        }
+
         private void SaveAndReturnToMenu()
         {
             CoreCache.SaveData.SaveGame();
