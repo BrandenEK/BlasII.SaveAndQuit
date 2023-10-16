@@ -1,6 +1,5 @@
 ﻿using BlasII.ModdingAPI;
 using BlasII.ModdingAPI.Audio;
-using Il2CppI2.Loc;
 using Il2CppTGK.Game;
 using Il2CppTGK.Game.Components.UI;
 using Il2CppTGK.UI;
@@ -64,8 +63,7 @@ namespace BlasII.SaveAndQuit
 
             // Set text
             UIPixelTextWithShadow text = _saveButton.GetComponentInChildren<UIPixelTextWithShadow>();
-            Object.Destroy(text.GetComponent<Localize>());
-            text.SetText("Save and Quit to Menu");
+            LocalizationHandler.AddPixelTextLocalizer(text, "text");
             text.SetColor(Color.white);
 
             // Add button to selectable list
