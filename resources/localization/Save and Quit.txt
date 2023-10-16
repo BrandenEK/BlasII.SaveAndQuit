@@ -1,0 +1,2 @@
+lang: en
+text: Save and Quit to Menu
