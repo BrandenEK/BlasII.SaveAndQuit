@@ -11,7 +11,7 @@
     <Authors>Damocles</Authors>
     <Company>Damocles</Company>
     <Description>A utility mod that allows the player to save and quit from anywhere</Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
 
     <TargetName>SaveAndQuit</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlasII.ModdingAPI" Version="0.3.4" />
+    <PackageReference Include="BlasII.ModdingAPI" Version="0.4.0" />
     <PackageReference Include="BlasII.ModdingReferences" Version="1.1.0.2" />
     <PackageReference Include="Il2CppInterop.Runtime" Version="1.4.5" />
     <PackageReference Include="LavaGang.MelonLoader" Version="0.6.1" />
