@@ -1,2 +1,5 @@
 lang: en
 text: Save and Quit to Menu
+
+lang: es
+text: Guardar y Salir al Menú
