@@ -8,7 +8,7 @@
     <Authors>Damocles</Authors>
     <Company>Damocles</Company>
     <Description>A utility mod that allows the player to save and quit from anywhere</Description>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
 
     <TargetName>SaveAndQuit</TargetName>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
