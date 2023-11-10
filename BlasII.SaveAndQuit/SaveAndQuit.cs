@@ -1,5 +1,6 @@
 ﻿using BlasII.ModdingAPI;
 using BlasII.ModdingAPI.Audio;
+using BlasII.ModdingAPI.Input;
 using Il2CppTGK.Game;
 using Il2CppTGK.Game.Components.UI;
 using Il2CppTGK.UI;
@@ -15,9 +16,14 @@ namespace BlasII.SaveAndQuit
         private UINavigableControl _saveButton;
         private bool _focused;
 
+        protected override void OnInitialize()
+        {
+            LocalizationHandler.RegisterDefaultLanguage("en");
+        }
+
         protected override void OnUpdate()
         {
-            if (CoreCache.Input.GetButtonDown("UI Confirm") && _focused && _saveButton != null && _saveButton.gameObject.activeInHierarchy)
+            if (InputHandler.GetButtonDown(ButtonType.UIConfirm) && _focused && _saveButton != null && _saveButton.gameObject.activeInHierarchy)
             {
                 SaveAndReturnToMenu();
             }
