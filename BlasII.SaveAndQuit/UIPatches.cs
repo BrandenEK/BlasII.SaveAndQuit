@@ -1,14 +1,16 @@
 ﻿using HarmonyLib;
 using Il2CppTGK.Game.Components.UI;
 
-namespace BlasII.SaveAndQuit
+namespace BlasII.SaveAndQuit;
+
+/// <summary>
+/// Call event when menu tab changes
+/// </summary>
+[HarmonyPatch(typeof(InventoryWindowLogic), nameof(InventoryWindowLogic.ChangeTab))]
+class InventoryWindowLogic_ChangeTab_Patch
 {
-    [HarmonyPatch(typeof(InventoryWindowLogic), nameof(InventoryWindowLogic.ChangeTab))]
-    class Pause_Tab_Patch
+    public static void Postfix()
     {
-        public static void Postfix()
-        {
-            Main.SaveAndQuit.OnTabChange();
-        }
+        Main.SaveAndQuit.OnTabChange();
     }
 }
