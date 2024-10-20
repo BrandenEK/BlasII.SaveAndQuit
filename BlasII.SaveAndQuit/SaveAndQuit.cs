@@ -12,7 +12,7 @@ namespace BlasII.SaveAndQuit;
 /// <summary>
 /// Allows the player to save and quit from anywhere
 /// </summary>
-public sealed class SaveAndQuit : BlasIIMod
+public class SaveAndQuit : BlasIIMod
 {
     internal SaveAndQuit() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }
 
