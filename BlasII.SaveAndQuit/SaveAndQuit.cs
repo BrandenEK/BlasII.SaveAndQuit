@@ -52,8 +52,8 @@ public class SaveAndQuit : BlasIIMod
     private void SaveAndReturnToMenu()
     {
         CoreCache.SaveData.SaveGame();
-        CoreCache.SaveData.HideSavePopup();
-        CoreCache.LoadSequenceManager.ReturnToMainMenu();
+        //CoreCache.SaveData.HideSavePopup();
+        CoreCache.LoadSequenceManager.ReturnToMainMenu(new Il2CppSystem.Threading.CancellationToken());
         AudioHelper.PlayEffectUI(AudioHelper.SfxUI.OpenMenu);
     }
 
@@ -86,7 +86,7 @@ public class SaveAndQuit : BlasIIMod
         // Create object
         _saveButton = Object.Instantiate(exitButton, exitButton.transform.parent).GetComponent<UINavigableControl>();
         _saveButton.name = "Save and Quit";
-        _saveButton.transform.SetSiblingIndex(1);
+        _saveButton.transform.SetSiblingIndex(2);
 
         // Set text
         UIPixelTextWithShadow text = _saveButton.GetComponentInChildren<UIPixelTextWithShadow>();
